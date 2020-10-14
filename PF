@@ -1,0 +1,210 @@
+package pontoflutuante;
+
+import java.util.Scanner;
+
+public class PontoFlutuante {
+         
+   //converte de IEE754 para float   
+    public float getFloat32()  
+    {  
+        Scanner s = new Scanner (System.in);
+        System.out.println("Digite o valor em IEEE 754");
+        String Binary = s.nextLine();
+        int intBits = Integer.parseInt(Binary, 2);
+        float myFloat = Float.intBitsToFloat(intBits);
+        return myFloat;  
+    } 
+     
+   //converte de float para IEEE754
+    public String getBinary32( )  
+    {  
+        Scanner s = new Scanner (System.in);
+        System.out.println("Digite o valor em float");
+        float value = s.nextFloat();
+        int intBits = Float.floatToIntBits(value); 
+        String binary = Integer.toBinaryString(intBits);
+        return binary;
+    }
+    
+    public void comparaValoresIEEE(String a1, String a2) {
+        if (a1.equals(a2)) {
+            System.out.println("Os valores são iguais");
+        }
+        else {
+            System.out.println("Os valores não são iguais");
+        }
+    }
+    
+    public void comparaValoresFloat(float a1, float a2) {
+        if (a1==a2) {
+            System.out.println("Os valores são iguais");
+        }
+        else {
+            System.out.println("Os valores não são iguais");
+        }
+    }
+    
+    public float verificarMenorFloat() {
+        Scanner b = new Scanner(System.in);
+        Scanner b1 = new Scanner(System.in);
+        float a1 = b.nextFloat();
+        float a2 = b1.nextFloat();
+        if (a1 < a2) {
+            return a1;
+        }
+        if (a2 < a1){
+            return a2;
+        }
+        else {
+            return 0;
+        }
+    }
+    
+    public String verificarMenorBinario() {
+        Scanner b = new Scanner(System.in);
+        Scanner b1 = new Scanner(System.in);
+        String a1 = b.nextLine();
+        String a2 = b1.nextLine();
+        
+        int intBits = Integer.parseInt(a1, 2);
+        float f1 = Float.intBitsToFloat(intBits);
+        int intBits2 = Integer.parseInt(a2, 2);
+        float f2 = Float.intBitsToFloat(intBits2);
+        
+        if (f1 < f2) {
+        int intBits3 = Float.floatToIntBits(f1); 
+        String binario = Integer.toBinaryString(intBits3);
+        return binario;
+        }
+        if (f2 < f1){
+            int intBits4 = Float.floatToIntBits(f2); 
+        String binario = Integer.toBinaryString(intBits4);
+            return binario;
+        }
+        else {
+            return "Eh Igual";
+        }
+    }
+   
+    public String somaComponentes (String a, String b) {
+       while(a.length() < b.length())
+            a = "0" + a;
+        while(b.length() < a.length()) 
+            b = "0" + b;
+        int carry = 0;
+        String result = ""; 
+        for(int i = a.length() - 1; i >= 0; i--){
+            int d1 = Integer.parseInt(Character.toString(a.charAt(i)));
+            int d2 = Integer.parseInt(Character.toString(b.charAt(i)));
+            int sum = d1 + d2 + carry;
+            if(sum == 0)
+                result = "0" + result;
+            else if(sum == 1){
+                result = "1" + result;
+                carry = 0;
+            }
+            else if(sum == 2){
+                result = "0" + result;
+                carry = 1;
+            }
+            else if(sum == 3){
+                result = "1" + result;
+                carry = 1;
+            }
+        }
+        if(carry == 1)
+            result = "1" + result;
+        return result;
+    }
+ 
+    public void Soma(String a, String b) {
+        String s1 = a.substring(0, 1);
+        String s2 = a.substring(1, 9);
+        String s3 = a.substring(9, 31);
+        String b1 = b.substring(0, 1);
+        String b2 = b.substring(1, 9);
+        String b3 = b.substring(9, 31);
+        String resultado = somaComponentes(s1, b1) + somaComponentes(s2, b2) + somaComponentes(s3, b3);
+        System.out.println(resultado);
+        
+    }
+
+    
+    public void menu () {
+        Scanner s1 = new Scanner (System.in);
+        System.out.println("1 - Conversão de valores");
+        System.out.println("2 - Comparar igualdade");
+        System.out.println("3 - Comaparar A < B");
+        System.out.println("4 - Soma de valores");
+        int opcao = s1.nextInt();
+        if (opcao == 1) {
+            Scanner s2 = new Scanner (System.in);
+            System.out.println("1 - Decimal para IEEE 754");
+            System.out.println("2 - IEEE 754 para decimal");
+            int opcao2 = s2.nextInt();
+            if (opcao2 == 1) {
+                String str = getBinary32( );  
+                System.out.println( str );    
+            }
+            
+            if (opcao2 == 2) {
+                float f = getFloat32();  
+                System.out.println( f );
+               
+            }
+        }
+        
+        if (opcao ==2) {
+             Scanner s3 = new Scanner (System.in);
+             Scanner s4 = new Scanner(System.in);
+             Scanner s5 = new Scanner(System.in);
+            System.out.println("1 - Comparação entre IEEE 754");
+            System.out.println("2 - Comparação entre decimal");
+            int opcao3 = s3.nextInt();
+            if (opcao3 == 1) {
+                System.out.println("Digite o primeiro valor");
+                String a1 = s4.nextLine();
+                System.out.println("Digite o segundo valor");
+                String a2 = s5.nextLine();
+                comparaValoresIEEE(a1, a2);  
+            }
+            
+            if (opcao3 == 2) {
+                System.out.println("Digite o primeiro valor");
+                float a1 = s4.nextFloat();
+                System.out.println("Digite o segundo valor");
+                float a2 = s5.nextFloat();
+                comparaValoresFloat(a1, a2);
+            }
+        }
+        
+        if (opcao ==3) {
+            System.out.println("1 - Comparar por binario");
+            System.out.println("2 - Comparar por float");
+            Scanner s6 = new Scanner(System.in);
+            int opcao4 = s6.nextInt();
+            if (opcao4 == 1) {
+                System.out.println("O menor numero eh: " + verificarMenorBinario());
+            }
+            if (opcao4 == 2) {
+                System.out.println("O menor numero eh: " + verificarMenorFloat())
+                        ;
+            }
+        }
+        
+        if (opcao==4) {
+            Scanner s7 = new Scanner(System.in);
+            Scanner s8 = new Scanner(System.in);
+            Soma(s7.nextLine(), s8.nextLine());
+            //System.out.println(somaComponentes(s7.nextLine(), s8.nextLine()));
+        }
+    }
+ 
+    
+    public static void main(String[] args) 
+    {
+        PontoFlutuante p = new PontoFlutuante();
+        p.menu();
+    
+}
+}
