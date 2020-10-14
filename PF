@@ -5,22 +5,16 @@ import java.util.Scanner;
 public class PontoFlutuante {
          
    //converte de IEE754 para float   
-    public float getFloat32()  
-    {  
-        Scanner s = new Scanner (System.in);
-        System.out.println("Digite o valor em IEEE 754");
-        String binario = s.nextLine();
+    public float getFloat32(String binario)  
+    {    
         int intBits = Integer.parseInt(binario, 2);
         float float1 = Float.intBitsToFloat(intBits);
         return float1;  
     } 
      
    //converte de float para IEEE754
-    public String getBinario32( )  
+    public String getBinario32(float valor )  
     {  
-        Scanner s = new Scanner (System.in);
-        System.out.println("Digite o valor em float");
-        float valor = s.nextFloat();
         int intBits = Float.floatToIntBits(valor); 
         String binario = Integer.toBinaryString(intBits);
         return binario;
@@ -85,48 +79,27 @@ public class PontoFlutuante {
             return "Eh Igual";
         }
     }
-   
-    public String somaComponentes (String a, String b) {
-       while(a.length() < b.length())
-            a = "0" + a;
-        while(b.length() < a.length()) 
-            b = "0" + b;
-        int carry = 0;
-        String result = ""; 
-        for(int i = a.length() - 1; i >= 0; i--){
-            int d1 = Integer.parseInt(Character.toString(a.charAt(i)));
-            int d2 = Integer.parseInt(Character.toString(b.charAt(i)));
-            int sum = d1 + d2 + carry;
-            if(sum == 0)
-                result = "0" + result;
-            else if(sum == 1){
-                result = "1" + result;
-                carry = 0;
-            }
-            else if(sum == 2){
-                result = "0" + result;
-                carry = 1;
-            }
-            else if(sum == 3){
-                result = "1" + result;
-                carry = 1;
-            }
-        }
-        if(carry == 1)
-            result = "1" + result;
-        return result;
-    }
  
-    public void Soma(String a, String b) {
-        String s1 = a.substring(0, 1);
-        String s2 = a.substring(1, 9);
-        String s3 = a.substring(9, 31);
-        String b1 = b.substring(0, 1);
-        String b2 = b.substring(1, 9);
-        String b3 = b.substring(9, 31);
-        String resultado = somaComponentes(s1, b1) + somaComponentes(s2, b2) + somaComponentes(s3, b3);
-        System.out.println(resultado);
-        
+    public String somaBinarios() {
+        Scanner b1 = new Scanner (System.in);
+        Scanner b2 = new Scanner (System.in);
+        System.out.println("Digite o primeiro valor");
+        float f1 = getFloat32(b1.nextLine());
+        System.out.println("Digite o segundo valor");
+        float f2 = getFloat32(b2.nextLine());
+        f1 = f1+f2;
+        return getBinario32(f1);
+
+    }
+    
+    public float somaFloat() {
+        Scanner fl1 = new Scanner (System.in);
+        Scanner fl2 = new Scanner (System.in);
+        System.out.println("Digite o primeiro valor");
+        float f1 = fl1.nextFloat();
+        System.out.println("Digite o segundo valor");
+        float f2 = fl2.nextFloat();
+        return f1+f2;
     }
 
     
@@ -135,7 +108,8 @@ public class PontoFlutuante {
         System.out.println("1 - Conversão de valores");
         System.out.println("2 - Comparar igualdade");
         System.out.println("3 - Comaparar A < B");
-        System.out.println("4 - Soma de valores");
+        System.out.println("4 - Soma de valores IEEE754");
+        System.out.println("5 - Soma de valores Float");
         int opcao = s1.nextInt();
         if (opcao == 1) {
             Scanner s2 = new Scanner (System.in);
@@ -143,12 +117,16 @@ public class PontoFlutuante {
             System.out.println("2 - IEEE 754 para decimal");
             int opcao2 = s2.nextInt();
             if (opcao2 == 1) {
-                String str = getBinario32( );  
+                Scanner w = new Scanner (System.in);
+                System.out.println("Digite o valor que deseja converter");
+                String str = getBinario32(w.nextFloat());  
                 System.out.println( str );    
             }
             
             if (opcao2 == 2) {
-                float f = getFloat32();  
+                Scanner w = new Scanner (System.in);
+                System.out.println("Digite o valor que deseja converter");
+                float f = getFloat32(w.nextLine());  
                 System.out.println( f );
                
             }
@@ -193,17 +171,20 @@ public class PontoFlutuante {
         }
         
         if (opcao==4) {
-            Scanner s7 = new Scanner(System.in);
-            Scanner s8 = new Scanner(System.in);
-            Soma(s7.nextLine(), s8.nextLine());
-            //System.out.println(somaComponentes(s7.nextLine(), s8.nextLine()));
+            System.out.println(somaBinarios());
+        }
+        
+        if (opcao == 5) {
+            System.out.println(somaFloat());
         }
     }
  
     public static void main(String[] args) 
     {
         PontoFlutuante p = new PontoFlutuante();
+        long t1 = System.currentTimeMillis();
         p.menu();
-    
+        long t2 = System.currentTimeMillis();
+        System.out.println("O tempo de computação em milisegundos foi de: " + (t2-t1));
 }
 }
