@@ -9,21 +9,21 @@ public class PontoFlutuante {
     {  
         Scanner s = new Scanner (System.in);
         System.out.println("Digite o valor em IEEE 754");
-        String Binary = s.nextLine();
-        int intBits = Integer.parseInt(Binary, 2);
-        float myFloat = Float.intBitsToFloat(intBits);
-        return myFloat;  
+        String binario = s.nextLine();
+        int intBits = Integer.parseInt(binario, 2);
+        float float1 = Float.intBitsToFloat(intBits);
+        return float1;  
     } 
      
    //converte de float para IEEE754
-    public String getBinary32( )  
+    public String getBinario32( )  
     {  
         Scanner s = new Scanner (System.in);
         System.out.println("Digite o valor em float");
-        float value = s.nextFloat();
-        int intBits = Float.floatToIntBits(value); 
-        String binary = Integer.toBinaryString(intBits);
-        return binary;
+        float valor = s.nextFloat();
+        int intBits = Float.floatToIntBits(valor); 
+        String binario = Integer.toBinaryString(intBits);
+        return binario;
     }
     
     public void comparaValoresIEEE(String a1, String a2) {
@@ -143,7 +143,7 @@ public class PontoFlutuante {
             System.out.println("2 - IEEE 754 para decimal");
             int opcao2 = s2.nextInt();
             if (opcao2 == 1) {
-                String str = getBinary32( );  
+                String str = getBinario32( );  
                 System.out.println( str );    
             }
             
@@ -200,7 +200,6 @@ public class PontoFlutuante {
         }
     }
  
-    
     public static void main(String[] args) 
     {
         PontoFlutuante p = new PontoFlutuante();
